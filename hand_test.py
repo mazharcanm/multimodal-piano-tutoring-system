@@ -77,13 +77,13 @@ def midi_callback(msg):
     elif msg.type == 'note_off' or (msg.type == 'note_on' and msg.velocity == 0):
         playing_notes.discard(note_name) 
 
-# --- 2. BAŞLATMA ---
+# --- 2. INITIALIZATION ---
 available_ports = mido.get_input_names()
 if len(available_ports) > 0:
     MIDI_PORT_NAME = available_ports[0] 
-    print(f"Bağlanılan Cihaz: {MIDI_PORT_NAME}")
+    print(f"Connected Device: {MIDI_PORT_NAME}")
 else:
-    print("HATA: MIDI Kablosu bulunamadı!")
+    print("ERROR: MIDI Cable not found!")
     exit()
 
 base_options = python.BaseOptions(model_asset_path=MODEL_PATH)
@@ -91,7 +91,7 @@ options = vision.HandLandmarkerOptions(
     base_options=base_options, running_mode=vision.RunningMode.VIDEO, 
     num_hands=NUM_HANDS, min_hand_detection_confidence=MIN_DETECTION_CONFIDENCE)
 
-# --- 3. ANA DÖNGÜ ---
+# --- 3. MAIN LOOP ---
 def main():
     global exercise_mode, current_seq_index, current_step_hits, active_exercise
     global feedback_text, feedback_time, feedback_color
@@ -99,7 +99,7 @@ def main():
     try:
         inport = mido.open_input(MIDI_PORT_NAME, callback=midi_callback)
     except Exception as e:
-        print(f"MIDI Hatası: {e}")
+        print(f"MIDI Error: {e}")
         return
 
     cap = cv2.VideoCapture(0, cv2.CAP_AVFOUNDATION)
@@ -146,9 +146,9 @@ def main():
                     elif drop_angle > DROP_THRESHOLD_DEGREES and wy > ky:
                         warning_message = f"WARNING: WRIST COLLAPSED! ({int(drop_angle)} deg)"
 
-            # --- YENİ DİNAMİK ARAYÜZ (GUI) ---
+            # --- NEW DYNAMIC INTERFACE (HUD) ---
             
-            # 1. HEDEF NOTALAR (SOL ÜST KÖŞE)
+            # 1. TARGET NOTES (TOP LEFT CORNER)
             if exercise_mode:
                 target_notes = active_exercise["seq"][current_seq_index]
                 target_str = " & ".join(target_notes)
@@ -157,19 +157,19 @@ def main():
                 cv2.putText(frame, f"TARGET {progress_str}: {target_str}", (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 1.2, (255, 0, 0), 3)
                 cv2.putText(frame, f"Lesson: {active_exercise['name']} (Press 'x' to exit)", (50, 90), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (200, 200, 200), 1)
 
-            # 2. O AN ÇALINAN NOTALAR (SOL TARAFA HİZALI)
+            # 2. CURRENTLY PLAYED NOTES (LEFT ALIGNED)
             if playing_notes:
                 notes_str = " - ".join(sorted(playing_notes))
-                # Egzersiz modundaysa Target'ın altına in, değilse en üste çık
+                # Move below Target if in exercise mode, otherwise go to top
                 y_pos_playing = 140 if exercise_mode else 50
                 cv2.putText(frame, f"PLAYING: {notes_str}", (50, y_pos_playing), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (255, 255, 255), 2)
 
-            # 3. BİYOMEKANİK UYARILAR (DİĞER YAZILARIN ALTINA)
+            # 3. BIOMECHANICAL WARNINGS (BELOW OTHER TEXT)
             if warning_message:
                 y_pos_warning = 190 if exercise_mode else 100
                 cv2.putText(frame, warning_message, (50, y_pos_warning), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 3)
 
-            # 4. ANA MENÜ (SAĞ ÜST KÖŞE - SADECE DERS YOKKEN GÖZÜKÜR)
+            # 4. MAIN MENU (TOP RIGHT CORNER - VISIBLE ONLY WHEN NO LESSON)
             if not exercise_mode:
                 cv2.putText(frame, "=== LESSON MENU ===", (w - 350, 40), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 0), 2)
                 y_offset = 80
@@ -177,13 +177,13 @@ def main():
                     cv2.putText(frame, f"Press {key}: {val['name']}", (w - 400, y_offset), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (200, 255, 200), 2)
                     y_offset += 30
 
-            # 5. GERİ BİLDİRİM "GOOD / MISTAKE" (EKRANIN TAM ORTASI)
+            # 5. FEEDBACK "GOOD / MISTAKE" (CENTER OF SCREEN)
             if time.time() - feedback_time < 2.0:
                 cv2.putText(frame, feedback_text, (w//2 - 250, h//2), cv2.FONT_HERSHEY_SIMPLEX, 1, feedback_color, 3)
 
             cv2.imshow('AI Piano Tutor - Clean HUD Edition', frame)
             
-            # --- KLAVYE KONTROLLERİ ---
+            # --- KEYBOARD CONTROLS ---
             key = cv2.waitKey(1) & 0xFF
             if key == ord('q'): 
                 break
