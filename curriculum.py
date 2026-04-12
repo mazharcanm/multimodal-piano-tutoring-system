@@ -49,45 +49,45 @@ CURRICULUM = {
     "6": {
         "name": "Song: Ode to Joy",
         "seq": [
-            # TEMA A (İlk 4 Ölçü)
-            ("C3", "E3", "G3", "E4"),  # Sol el C Majör Akoru + Sağ el E4
-            ("E4",),                   # Sol el akoru tutarken sağ el E4
-            ("F4",),                   # Sağ el F4
-            ("G4",),                   # Sağ el G4
+            # THEME A (First 4 Measures)
+            ("C3", "E3", "G3", "E4"),  # Left hand C Major Chord + Right hand E4
+            ("E4",),                   # Hold Left hand chord, Right hand E4
+            ("F4",),                   # Right hand F4
+            ("G4",),                   # Right hand G4
             
-            ("G2", "B2", "D3", "G4"),  # Sol el G Majör Akoruna geçer + Sağ el G4
-            ("F4",),                   # Sağ el F4
-            ("E4",),                   # Sağ el E4
-            ("D4",),                   # Sağ el D4
+            ("G2", "B2", "D3", "G4"),  # Left hand switches to G Major Chord + Right hand G4
+            ("F4",),                   # Right hand F4
+            ("E4",),                   # Right hand E4
+            ("D4",),                   # Right hand D4
             
-            ("C3", "E3", "G3", "C4"),  # Sol el C Majör Akoruna döner + Sağ el C4
-            ("C4",),                   # Sağ el C4
-            ("D4",),                   # Sağ el D4
-            ("E4",),                   # Sağ el E4
+            ("C3", "E3", "G3", "C4"),  # Left hand returns to C Major Chord + Right hand C4
+            ("C4",),                   # Right hand C4
+            ("D4",),                   # Right hand D4
+            ("E4",),                   # Right hand E4
             
-            ("G2", "B2", "D3", "E4"),  # Sol el G Majör Akoru + Sağ el E4
-            ("D4",),                   # Sağ el D4
-            ("D4",),                   # Sağ el D4 (Ölçü sonu)
+            ("G2", "B2", "D3", "E4"),  # Left hand G Major Chord + Right hand E4
+            ("D4",),                   # Right hand D4
+            ("D4",),                   # Right hand D4 (End of measure)
 
-            # TEMA A' (Son 4 Ölçü)
-            ("C3", "E3", "G3", "E4"),  # Sol el C Majör Akoru + Sağ el E4
+            # THEME A' (Last 4 Measures)
+            ("C3", "E3", "G3", "E4"),  # Left hand C Major Chord + Right hand E4
             ("E4",),
             ("F4",),
             ("G4",),
             
-            ("G2", "B2", "D3", "G4"),  # Sol el G Majör Akoru + Sağ el G4
+            ("G2", "B2", "D3", "G4"),  # Left hand G Major Chord + Right hand G4
             ("F4",),
             ("E4",),
             ("D4",),
             
-            ("C3", "E3", "G3", "C4"),  # Sol el C Majör Akoru + Sağ el C4
+            ("C3", "E3", "G3", "C4"),  # Left hand C Major Chord + Right hand C4
             ("C4",),
             ("D4",),
             ("E4",),
             
-            ("G2", "B2", "D3", "D4"),  # Sol el G Majör Akoru + Sağ el D4
-            ("C4",),                   # Sağ el C4
-            ("C3", "E3", "G3", "C4")   # BÜYÜK FİNAL: İki el de C Majör Kök Akoru
+            ("G2", "B2", "D3", "D4"),  # Left hand G Major Chord + Right hand D4
+            ("C4",),                   # Right hand C4
+            ("C3", "E3", "G3", "C4")   # GRAND FINALE: Both hands C Major Root Chord
         ]
     }
 }
